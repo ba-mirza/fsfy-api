@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import Fastify from "fastify";
+import { userRoutes } from "./modules/user/user.route";
 
 const fastify = Fastify();
 
@@ -11,6 +12,8 @@ fastify.get(
 );
 
 async function main() {
+  fastify.register(userRoutes, { prefix: "api/users" });
+
   try {
     await fastify.listen({
       port: 4000,
