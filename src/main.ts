@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import Fastify from "fastify";
 import { userRoutes } from "./modules/user/user.route";
+import { userSchemas } from "./modules/user/user.schema";
 
 const fastify = Fastify();
 
@@ -13,6 +14,10 @@ fastify.get(
 
 async function main() {
   fastify.register(userRoutes, { prefix: "api/users" });
+
+  for (const schema of userSchemas) {
+    fastify.addSchema(schema);
+  }
 
   try {
     await fastify.listen({
